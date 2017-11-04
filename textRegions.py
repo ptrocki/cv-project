@@ -1,6 +1,5 @@
 
 import cv2
-import numpy as np
 
 def trocki():
     img = cv2.imread('answ.jpeg')
@@ -18,8 +17,16 @@ def trocki():
     #     cv2.putText(vis, str(number), tuple(h[0][0]), font, 1, (255, 255, 255), 1, cv2.LINE_AA)
     #     number = number + 1
 
-    # xmin = bboxes[:, 0]
-    # ymin = bboxes[:, 1]
+    bboxes_x = bboxes[:, 0]
+    bboxes_y = bboxes[:, 1]
+    bboxes_w = bboxes[:, 2]
+    bboxes_h = bboxes[:, 3]
+    smallestx = int(round(min(bboxes_x), 0))
+    yy = int(round(max(bboxes_y), 0))
+    height = int(round(max(bboxes_h), 0))
+
+    cv2.line(vis, (smallestx, 0), (smallestx, yy+height), (255, 0, 0), 5)
+    cv2.line(vis, (smallestx+200, 0), (smallestx + 200, yy+height), (255, 255, 0), 5)
     # cv2.contourArea(regions[0])
     # startx = int(round(min(xmin), 0))
     # starty = int(round(min(ymin), 0))
