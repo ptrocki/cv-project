@@ -3,21 +3,29 @@ import cv2
 import numpy as np
 
 def trocki():
-    img = cv2.imread('answers.png')
+    img = cv2.imread('answ.jpeg')
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    mser = cv2.MSER_create(_max_area=120)
+    mser = cv2.MSER_create()
     vis = img.copy()
     regions, bboxes = mser.detectRegions(gray)
-    # hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]
-    # cv2.polylines(vis, hulls, 1, (0, 255, 0))
-    xmin = bboxes[:, 0]
-    ymin = bboxes[:, 1]
 
-    smallestx = int(round(min(xmin), 0))
-    smallesty = int(round(min(ymin), 0))
+    hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]
+    cv2.polylines(vis, hulls, 1, (0, 255, 0))
 
-    cv2.rectangle(vis, (smallestx, smallesty), (smallestx + 20, smallesty + 20), (0, 255, 0), 2)
-    cv2.imwrite("answers_result.png", vis)
+    # number = 0
+    # font = cv2.FONT_HERSHEY_SIMPLEX
+    # for h in hulls:
+    #     cv2.putText(vis, str(number), tuple(h[0][0]), font, 1, (255, 255, 255), 1, cv2.LINE_AA)
+    #     number = number + 1
+
+    # xmin = bboxes[:, 0]
+    # ymin = bboxes[:, 1]
+    # cv2.contourArea(regions[0])
+    # startx = int(round(min(xmin), 0))
+    # starty = int(round(min(ymin), 0))
+    # cv2.rectangle(vis, (smallestx, smallesty), (smallestx + 20, smallesty + 20), (0, 255, 0), 2)
+
+    cv2.imwrite("answ.png", vis)
 
 def barber():
     img = cv2.imread('sc.jpeg')
