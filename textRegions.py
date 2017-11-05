@@ -63,4 +63,5 @@ def barber():
 answerRegion = answer_region.AnswersRegion()
 img = cv2.imread('answ2.png')
 answerRegion.test(img)
-
+img2 = cv2.imread('Scan2.png')
+answerRegion.test(img2)

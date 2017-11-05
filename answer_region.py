@@ -8,6 +8,8 @@ class AnswersRegion:
         unique.append(bboxes[0])
         bboxes.remove(bboxes[0])
         for t in bboxes:
+            if t[3] < 69:
+                continue
             uni = unique[-1]
             diff = abs(uni[1]-t[1])
             if diff > delta:
@@ -56,5 +58,5 @@ class AnswersRegion:
         for uni in uniqueasd:
             cv2.rectangle(vis, (uni[0], uni[1]), (uni[0]+uni[2], uni[1]+uni[3]), (0, 255, 0), 2)
 
-        self.is_marked(bboxes,img)
-        #cv2.imwrite("answ2_result.png", vis)
+        self.is_marked(uniqueasd,img)
+        cv2.imwrite("answ2_result.png", erosion)
