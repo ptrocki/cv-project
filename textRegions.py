@@ -1,5 +1,6 @@
 
 import cv2
+import numpy as np
 
 def trocki():
     img = cv2.imread('answ.jpeg')
@@ -90,4 +91,21 @@ def barber():
 
     cv2.imwrite("result2.png", imgcopy)
 
-trocki()
+#trocki()
+
+img = cv2.imread('answ.jpeg')
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+ret,thresh2 = cv2.threshold(gray,100,255,cv2.THRESH_BINARY_INV)
+kernel = np.ones((7,7),np.uint8)
+erosion = cv2.erode(thresh2,kernel,iterations = 1)
+#cv2.imwrite("result2.png", erosion)
+mser = cv2.MSER_create()
+vis = img.copy()
+regions, bboxes = mser.detectRegions(erosion)
+
+filtered_boxes = [row for row in bboxes if row[2] < 200  and row[2] > 100]
+for b in filtered_boxes:
+    cv2.rectangle(vis, (b[0], b[1]), (b[0]+b[2], b[1]+b[3]), (0, 255, 0), 2)
+#hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]
+#cv2.polylines(vis, hulls, 1, (0, 255, 0))
+cv2.imwrite("result2.png", vis)
