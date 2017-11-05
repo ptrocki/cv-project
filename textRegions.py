@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 from itertools import groupby
 import answer_region
-
 def barber():
     img = cv2.imread('sc.jpeg')
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -60,4 +59,8 @@ def barber():
 
     cv2.imwrite("result2.png", imgcopy)
 
-answer_region.test()
+
+answerRegion = answer_region.AnswersRegion()
+img = cv2.imread('answ2.png')
+answerRegion.test(img)
+
