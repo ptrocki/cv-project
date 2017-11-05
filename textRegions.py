@@ -61,7 +61,7 @@ def barber():
 
 
 answerRegion = answer_region.AnswersRegion()
-img = cv2.imread('answ2.png')
+img = cv2.imread('input/thick_line_all_answers.png')
 answerRegion.test(img)
-img2 = cv2.imread('Scan2.png')
+img2 = cv2.imread('input/thick_line_one_answer.png')
 answerRegion.test(img2)
