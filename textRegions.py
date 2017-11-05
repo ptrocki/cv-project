@@ -1,39 +1,8 @@
 
 import cv2
 import numpy as np
-
-def trocki():
-    img = cv2.imread('answ.jpeg')
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    mser = cv2.MSER_create()
-    vis = img.copy()
-    regions, bboxes = mser.detectRegions(gray)
-
-    hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]
-    cv2.polylines(vis, hulls, 1, (0, 255, 0))
-
-    # number = 0
-    # font = cv2.FONT_HERSHEY_SIMPLEX
-    # for h in hulls:
-    #     cv2.putText(vis, str(number), tuple(h[0][0]), font, 1, (255, 255, 255), 1, cv2.LINE_AA)
-    #     number = number + 1
-
-    bboxes_x = bboxes[:, 0]
-    bboxes_y = bboxes[:, 1]
-    bboxes_w = bboxes[:, 2]
-    bboxes_h = bboxes[:, 3]
-    smallestx = int(round(min(bboxes_x), 0))
-    yy = int(round(max(bboxes_y), 0))
-    height = int(round(max(bboxes_h), 0))
-
-    cv2.line(vis, (smallestx, 0), (smallestx, yy+height), (255, 0, 0), 5)
-    cv2.line(vis, (smallestx+200, 0), (smallestx + 200, yy+height), (255, 255, 0), 5)
-    # cv2.contourArea(regions[0])
-    # startx = int(round(min(xmin), 0))
-    # starty = int(round(min(ymin), 0))
-    # cv2.rectangle(vis, (smallestx, smallesty), (smallestx + 20, smallesty + 20), (0, 255, 0), 2)
-
-    cv2.imwrite("answ.png", vis)
+from itertools import groupby
+import answer_region
 
 def barber():
     img = cv2.imread('sc.jpeg')
@@ -91,21 +60,4 @@ def barber():
 
     cv2.imwrite("result2.png", imgcopy)
 
-#trocki()
-
-img = cv2.imread('answ.jpeg')
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-ret,thresh2 = cv2.threshold(gray,100,255,cv2.THRESH_BINARY_INV)
-kernel = np.ones((7,7),np.uint8)
-erosion = cv2.erode(thresh2,kernel,iterations = 1)
-#cv2.imwrite("result2.png", erosion)
-mser = cv2.MSER_create()
-vis = img.copy()
-regions, bboxes = mser.detectRegions(erosion)
-
-filtered_boxes = [row for row in bboxes if row[2] < 200  and row[2] > 100]
-for b in filtered_boxes:
-    cv2.rectangle(vis, (b[0], b[1]), (b[0]+b[2], b[1]+b[3]), (0, 255, 0), 2)
-#hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]
-#cv2.polylines(vis, hulls, 1, (0, 255, 0))
-cv2.imwrite("result2.png", vis)
+answer_region.test()
