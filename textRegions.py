@@ -22,6 +22,130 @@ def apprendRectangle(box, rectangle):
     return rectangle
 
 
+def mergeTwoBoxes(box1, box2):
+    if box1[0] <= box2[0] and box1[2] + box1[0] > box2[2] + box2[0]:
+        x1 = box1[0]
+        x2 = box1[2]
+    elif box1[0] <= box2[0]:
+        x1 = box1[0]
+        x2 = box2[0] - box1[0] + box2[2]
+    else:
+        x1 = box2[0]
+        x2 = box1[0] - box2[0] + box1[2]
+
+    if box1[1] <= box2[1] and box1[3] + box1[1] > box2[3] + box2[1]:
+        y1 = box1[1]
+        y2 = box1[3]
+    elif box1[1] <= box2[1]:
+        y1 = box1[1]
+        y2 = box2[1] - box1[1] + box2[3]
+    else:
+        y1 = box2[1]
+        y2 = box1[1] - box2[1] + box1[3]
+
+    bigBox = [x1, y1, x2, y2]
+
+    return bigBox
+
+
+def mergeWithinHeight(bboxes):
+    new = bboxes
+    result = []
+
+    i = 0
+    while i < len(new):
+        j = i + 1
+        bb = new[i]
+        toRemove = []
+
+        while j < len(new):
+            bb2 = new[j]
+            isSimilar = bb[1] <= bb2[1] <= bb[1] + bb[3]
+            isSimilar = isSimilar or bb2[1] <= bb[1] <= bb2[1] + bb2[3]
+
+            if isSimilar:
+                bb = mergeTwoBoxes(bb, bb2)
+                toRemove.append(j)
+
+            j += 1
+
+        for j in sorted(toRemove, reverse=True):
+            new = np.delete(new, j, axis=0)
+
+            if j < i:
+                i -= 1
+
+        result.append(bb)
+        i += 1
+
+    return result
+
+
+def mergeAmbiguous(bboxes, ambiguityThreshold = 4):
+    new = bboxes
+    result = []
+
+    i = 0
+    while i < len(new):
+        j = i + 1
+        bb = new[i]
+        toRemove = []
+
+        while j < len(new):
+            bb2 = new[j]
+            isSimilar = abs(bb[0] - bb2[0]) < ambiguityThreshold
+            isSimilar = isSimilar and abs(bb[1] - bb2[1]) < ambiguityThreshold
+
+            if isSimilar:
+                bb = mergeTwoBoxes(bb, bb2)
+                toRemove.append(j)
+
+            j += 1
+
+        for j in sorted(toRemove, reverse=True):
+            new = np.delete(new, j, axis=0)
+
+            if j < i:
+                i -= 1
+
+        result.append(bb)
+        i += 1
+
+    return result
+
+
+def removeAmbiguous(bboxes, ambiguityThreshold = 3):
+    new = list(bboxes)
+    toRemove = []
+
+    i = 0
+    while i < len(new):
+        j = i + 1
+        bb = new[i]
+
+        while j < len(new):
+            bb2 = new[j]
+            isSimilar = abs(bb[0] - bb2[0]) < ambiguityThreshold
+            isSimilar = isSimilar and abs(bb[1] - bb2[1]) < ambiguityThreshold
+            isSimilar = isSimilar and abs(bb[2] - bb2[2]) < ambiguityThreshold
+            isSimilar = isSimilar and abs(bb[3] - bb2[3]) < ambiguityThreshold
+
+            if isSimilar:
+                try:
+                    toRemove.index(j)
+                except ValueError:
+                    toRemove.append(j)
+
+            j += 1
+
+        i += 1
+
+    for j in sorted(toRemove, reverse=True):
+        new.pop(j)
+
+    return new
+
+
 def mergeBoxes(bboxes, avgHeight):
     rectangles = []
     unusedBoxes = list(bboxes)
@@ -61,6 +185,7 @@ def mergeBoxes(bboxes, avgHeight):
 
     return rectangles
 
+
 def convertToXYWH(toConvert):
     result = []
 
@@ -70,12 +195,11 @@ def convertToXYWH(toConvert):
 
     return result
 
+
 img = cv2.imread('test.jpg')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 mser = cv2.MSER_create()
-# mser.setMinArea(100)
-# mser.setMaxArea(800)
 
 coordinates, bboxes = mser.detectRegions(gray)
 bboxes2 = bboxes.copy()
@@ -107,25 +231,16 @@ cv2.rectangle(imgcopy, (smallestx, smallesty), (biggestx, biggesty), (0, 0, 0), 
 
 cv2.imwrite("result1.png", imgcopy)
 
+# rectangles = mergeAmbiguous(bboxes2)
+# rectangles = sorted(rectangles)
 rectangles = mergeBoxes(bboxes2, avgHeight)
 rectangles = convertToXYWH(rectangles)
-rectangles = mergeBoxes(rectangles, avgHeight)
-
-
-# needa work out smth better, bbox aren't sorted, so this doesn't work
-# rectangle = [smallestx, smallesty, smallestx, smallesty]
-# for bb in bboxes2:
-#     if (rectangle[3] - bb[1]) > avgHeight:
-#         rectangles.append(rectangle)
-#         rectangle = [bb[0], bb[1], bb[0] + bb[2], bb[1] + bb[3]]
-#     else:
-#         rectangle[0] = int(round(min([rectangle[0], bb[0]])))
-#         rectangle[1] = int(round(min([rectangle[1], bb[1]])))
-#         rectangle[2] = int(round(max([rectangle[2], bb[0] + bb[2]])))
-#         rectangle[3] = int(round(max([rectangle[3], bb[1] + bb[3]])))
+rectangles = mergeWithinHeight(rectangles)
+# rectangles = mergeBoxes(rectangles, avgHeight)
 
 for rect in rectangles:
-    cv2.rectangle(imgcopy, (rect[0], rect[1]), (rect[2], rect[3]), (0, 0, 0), 1)
+    # cv2.rectangle(imgcopy, (rect[0], rect[1]), (rect[2], rect[3]), (0, 0, 0), 1)
+    cv2.rectangle(imgcopy, (rect[0], rect[1]), (rect[0] + rect[2], rect[1] + rect[3]), (0, 0, 0), 1)
 
 cv2.imwrite("result3.png", imgcopy)
 
