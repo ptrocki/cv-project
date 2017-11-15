@@ -199,8 +199,7 @@ class TextRegions:
         return result
 
     @staticmethod
-    def findText(filename):
-        img = cv2.imread(filename)
+    def findText(img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         mser = cv2.MSER_create()
