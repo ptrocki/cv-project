@@ -100,7 +100,7 @@ class TextRegions:
                 isSimilar = isSimilar and abs(bb[1] - bb2[1]) < ambiguityThreshold
 
                 if isSimilar:
-                    bb = mergeTwoBoxes(bb, bb2)
+                    bb = TextRegions.mergeTwoBoxes(bb, bb2)
                     toRemove.append(j)
 
                 j += 1
