@@ -2,27 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4b8ef5c-b8cb-4252-b158-2b85a3e22a64" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answersRegion.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/detector.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/a.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/answ.jpeg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/answ.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/answ2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/answer_region.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/answers.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/answers_result.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/mser.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/only-answers.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/question-sheet-ver2 (1).pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/question-sheet-ver2.2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/question-sheet-ver2.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/question-sheet-ver2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/result1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/result2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sc.jpeg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test.jpg" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/result1.png" afterPath="$PROJECT_DIR$/output/result1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/question-sheet-ver2.xml" afterPath="$PROJECT_DIR$/template/question-sheet-ver2.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/textRegions.py" afterPath="$PROJECT_DIR$/textRegions.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,7 +24,7 @@
         <entry file="file://$PROJECT_DIR$/answersRegion.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="615">
-              <caret line="41" column="31" lean-forward="true" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
+              <caret line="41" column="31" lean-forward="false" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -66,9 +47,12 @@
       <file leaf-file-name="textRegions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/textRegions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-590">
-              <caret line="151" column="8" lean-forward="false" selection-start-line="151" selection-start-column="8" selection-end-line="151" selection-end-column="8" />
-              <folding />
+            <state relative-caret-position="-575">
+              <caret line="152" column="8" lean-forward="false" selection-start-line="152" selection-start-column="8" selection-end-line="152" selection-end-column="8" />
+              <folding>
+                <marker date="1511613887000" expanded="true" signature="63:1964" ph="..." />
+                <marker date="1511613887000" expanded="true" signature="1248:1964" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -119,6 +103,7 @@
       <list>
         <option value="$PROJECT_DIR$/answer_region.py" />
         <option value="$PROJECT_DIR$/textRegions.py" />
+        <option value="$PROJECT_DIR$/answersRegion.py" />
       </list>
     </option>
   </component>
@@ -655,9 +640,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/textRegions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-590">
-          <caret line="151" column="8" lean-forward="false" selection-start-line="151" selection-start-column="8" selection-end-line="151" selection-end-column="8" />
-          <folding />
+        <state relative-caret-position="-575">
+          <caret line="152" column="8" lean-forward="false" selection-start-line="152" selection-start-column="8" selection-end-line="152" selection-end-column="8" />
+          <folding>
+            <marker date="1511613887000" expanded="true" signature="63:1964" ph="..." />
+            <marker date="1511613887000" expanded="true" signature="1248:1964" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -682,7 +670,7 @@
     <entry file="file://$PROJECT_DIR$/answersRegion.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
-          <caret line="41" column="31" lean-forward="true" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
+          <caret line="41" column="31" lean-forward="false" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
