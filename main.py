@@ -22,7 +22,7 @@ def cutImage(img, rectangle, delta = 3):
     return img[y0:y1, x0:x1]
 
 
-img = cv2.imread('input/oneQ4.jpg')
+img = cv2.imread('input/all_sheet_ans2.jpg')
 wholeRegion, rectangles = txt.TextRegions.findText(img)
 imgCpy = img.copy()
 
