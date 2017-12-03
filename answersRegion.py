@@ -20,9 +20,8 @@ class AnswersRegion:
     #         else:
     #             continue
     #     return unique
-
     @staticmethod
-    def is_marked(img):
+    def computeRatio(img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         ret, thresh2 = cv2.threshold(gray, 105, 255, cv2.THRESH_BINARY)
         # thresh2 = cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,21,2)
@@ -44,7 +43,12 @@ class AnswersRegion:
                 allPixels.append(pixel)
 
         ratio = float(len(foundPixels)) / float(len(allPixels))
-        print("Ratio:", ratio)
+        # print("Ratio:", ratio)
+        return ratio
+
+    @staticmethod
+    def isMarked(img):
+        ratio = AnswersRegion.computeRatio(img=img)
 
         if ratio > 0.40:
             return True

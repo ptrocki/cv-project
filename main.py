@@ -30,11 +30,18 @@ rectangles = sorted(rectangles, key=lambda l:l[1])
 
 i = 0
 checkedAnswers = []
+questions = []
 
 while i < len(rectangles):
     answers = []
     checked = []
-    question = rectangles[i]
+
+    rect = rectangles[i]
+    qimg = cutImage(img, rect)
+    question = detector.Detector.readText(qimg)
+    questions.append(question)
+    print "\n" + question
+    print "Checked answers: "
 
     j = i + 1
     i += answersCount + 1
@@ -42,10 +49,11 @@ while i < len(rectangles):
         rect = rectangles[j]
         answers.append(rect)
         smallImg = cutImage(img, rect)
-        marked = answersRegion.AnswersRegion.is_marked(smallImg)
+        marked = answersRegion.AnswersRegion.isMarked(smallImg)
         checked.append(marked)
 
         if marked:
+            print str(j + answersCount - i + 1) + ", "
             cv2.rectangle(imgCpy, (rect[0], rect[1]), (rect[0] + rect[2], rect[1] + rect[3]), (200, 10, 10), 3)
             cv2.imwrite("output/marked.png", imgCpy)
 
@@ -53,7 +61,37 @@ while i < len(rectangles):
 
     checkedAnswers.append(checked)
 
-
+# THIS DOESNT WORK WELL:
+# answers = []
+# ratios = []
+#
+# while i < len(rectangles):
+#     checked = []
+#     question = rectangles[i]
+#
+#     j = i + 1
+#     i += answersCount + 1
+#     while j < i:
+#         rect = rectangles[j]
+#         answers.append(rect)
+#         smallImg = cutImage(img, rect)
+#         ratio = answersRegion.AnswersRegion.computeRatio(smallImg)
+#         ratios.append(ratio)
+#
+#         j += 1
+#
+# markedThreshold = answersRegion.AnswersRegion.computeMarkedThreshold(ratios)
+#
+# i = 0
+# for ratio in ratios:
+#     marked = answersRegion.AnswersRegion.isMarked(ratio, markedThreshold)
+#     rect = answers[i]
+#
+#     if marked:
+#         cv2.rectangle(imgCpy, (rect[0], rect[1]), (rect[0] + rect[2], rect[1] + rect[3]), (200, 10, 10), 3)
+#         cv2.imwrite("output/marked.png", imgCpy)
+#
+#     i += 1
 
 # for rectangle in rectangles:
 #     x0 = rectangle[0]
